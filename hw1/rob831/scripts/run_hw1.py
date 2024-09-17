@@ -49,7 +49,7 @@ class BC_Trainer(object):
             expert_policy=self.loaded_expert_policy,
         )
 
-def main():
+def main(args_list=None):
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--expert_policy_file', '-epf', type=str, required=True)  # relative to where you're running this script from
@@ -79,7 +79,7 @@ def main():
     parser.add_argument('--max_replay_buffer_size', type=int, default=1000000)
     parser.add_argument('--save_params', action='store_true')
     parser.add_argument('--seed', type=int, default=1)
-    args = parser.parse_args()
+    args = parser.parse_args(args_list)
 
     # convert args to dictionary
     params = vars(args)

@@ -81,7 +81,7 @@ class MLPPolicy(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
             observation = obs[None]
 
         # TODO return the action that the policy prescribes
-        raise self(observation)
+        return ptu.to_numpy(self(ptu.from_numpy(observation)))
 
     # update/train this policy
     def update(self, observations, actions, **kwargs):
@@ -112,7 +112,8 @@ class MLPPolicySL(MLPPolicy):
             adv_n=None, acs_labels_na=None, qvals=None
     ):
         # TODO: update the policy and return the loss
-        loss = self.loss(self(observations), actions)
+        loss = self.loss(self(ptu.from_numpy(observations)),
+                         ptu.from_numpy(actions))
 
         loss.backward()
         self.optimizer.step()
